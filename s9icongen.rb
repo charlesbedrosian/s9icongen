@@ -96,7 +96,7 @@ sizes.each do |s|
     filename = 'icons/' + (s[:scale] > 1 ? "Icon-#{s[:size]}@#{s[:scale]}x.png" : "Icon-#{s[:size]}.png")
     log(size, filename)
     scaled_img.write(filename)
-    config_file.syswrite("<icon src=\"assets/icons/#{name}\" width=\"#{width}\" height=\"#{height}\"/>\n")    
+    config_file.syswrite("<icon src=\"assets/icons/#{name}\" width=\"#{size}\" height=\"#{size}\"/>\n")    
   end
 end
 
