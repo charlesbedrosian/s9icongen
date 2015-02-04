@@ -84,16 +84,19 @@ end
 ia_file = 'icons/iTunesArtwork'
 File.delete(ia_file) if File.exists?(ia_file)
 File.delete("#{ia_file}@2x") if File.exists?("#{ia_file}@2x")
+`mkdir -p icons`
 `rm icons/*.png` unless Dir['icons/*.png'].empty?
-
+config_file = File.new('config+icons.xml', 'w+')
 # resize
 sizes.each do |s|
   if device == 'universal' || s[:idiom].start_with?(device) || s[:idiom] == 'ipad app'
     size = s[:scale]*s[:size]
+    name = s[:name]
     scaled_img = img.resize_to_fit(size, size)
     filename = 'icons/' + (s[:scale] > 1 ? "Icon-#{s[:size]}@#{s[:scale]}x.png" : "Icon-#{s[:size]}.png")
     log(size, filename)
     scaled_img.write(filename)
+    config_file.syswrite("<icon src=\"assets/icons/#{name}\" width=\"#{width}\" height=\"#{height}\"/>\n")    
   end
 end
 
